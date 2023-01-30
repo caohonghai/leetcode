@@ -13,8 +13,8 @@ If you are in the top 25% of the contest rating, you’ll get the “Knight” b
 
 | Level | Proportion | Badge      | Rating |                                                                                                                         |
 | ----- | ---------- | ---------- | -------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| LV3 | 5\%      | Guardian | &ge;2183.66   | <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/Guardian.gif" style="width: 80px;" /></p> |
-| LV2 | 20\%     | Knight   | &ge;1851.93   | <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/Knight.gif" style="width: 80px;" /></p>   |
+| LV3 | 5\%      | Guardian | &ge;2228.90   | <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/Guardian.gif" style="width: 80px;" /></p> |
+| LV2 | 20\%     | Knight   | &ge;1842.73   | <p><img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/images/Knight.gif" style="width: 80px;" /></p>   |
 | LV1 | 75\%     | -          | -              | -                                                                                                                       |
 
 For top 10 users (excluding LCCN users), your LeetCode ID will be colored orange on the ranking board. You'll also have the honor with you when you post/comment under discuss.
@@ -24,6 +24,54 @@ For top 10 users (excluding LCCN users), your LeetCode ID will be colored orange
 Get your rating changes right after the completion of LeetCode contests, https://lcpredictor.herokuapp.com
 
 ## Past Contests
+
+#### Weekly Contest 330
+
+- [2549. Count Distinct Numbers on Board](/solution/2500-2599/2549.Count%20Distinct%20Numbers%20on%20Board/README_EN.md)
+- [2550. Count Collisions of Monkeys on a Polygon](/solution/2500-2599/2550.Count%20Collisions%20of%20Monkeys%20on%20a%20Polygon/README_EN.md)
+- [2551. Put Marbles in Bags](/solution/2500-2599/2551.Put%20Marbles%20in%20Bags/README_EN.md)
+- [2552. Count Increasing Quadruplets](/solution/2500-2599/2552.Count%20Increasing%20Quadruplets/README_EN.md)
+
+
+#### Weekly Contest 329
+
+- [2544. Alternating Digit Sum](/solution/2500-2599/2544.Alternating%20Digit%20Sum/README_EN.md)
+- [2545. Sort the Students by Their Kth Score](/solution/2500-2599/2545.Sort%20the%20Students%20by%20Their%20Kth%20Score/README_EN.md)
+- [2546. Apply Bitwise Operations to Make Strings Equal](/solution/2500-2599/2546.Apply%20Bitwise%20Operations%20to%20Make%20Strings%20Equal/README_EN.md)
+- [2547. Minimum Cost to Split an Array](/solution/2500-2599/2547.Minimum%20Cost%20to%20Split%20an%20Array/README_EN.md)
+
+
+#### Biweekly Contest 96
+
+- [2540. Minimum Common Value](/solution/2500-2599/2540.Minimum%20Common%20Value/README_EN.md)
+- [2541. Minimum Operations to Make Array Equal II](/solution/2500-2599/2541.Minimum%20Operations%20to%20Make%20Array%20Equal%20II/README_EN.md)
+- [2542. Maximum Subsequence Score](/solution/2500-2599/2542.Maximum%20Subsequence%20Score/README_EN.md)
+- [2543. Check if Point Is Reachable](/solution/2500-2599/2543.Check%20if%20Point%20Is%20Reachable/README_EN.md)
+
+
+#### Weekly Contest 328
+
+- [2535. Difference Between Element Sum and Digit Sum of an Array](/solution/2500-2599/2535.Difference%20Between%20Element%20Sum%20and%20Digit%20Sum%20of%20an%20Array/README_EN.md)
+- [2536. Increment Submatrices by One](/solution/2500-2599/2536.Increment%20Submatrices%20by%20One/README_EN.md)
+- [2537. Count the Number of Good Subarrays](/solution/2500-2599/2537.Count%20the%20Number%20of%20Good%20Subarrays/README_EN.md)
+- [2538. Difference Between Maximum and Minimum Price Sum](/solution/2500-2599/2538.Difference%20Between%20Maximum%20and%20Minimum%20Price%20Sum/README_EN.md)
+
+
+#### Weekly Contest 327
+
+- [2529. Maximum Count of Positive Integer and Negative Integer](/solution/2500-2599/2529.Maximum%20Count%20of%20Positive%20Integer%20and%20Negative%20Integer/README_EN.md)
+- [2530. Maximal Score After Applying K Operations](/solution/2500-2599/2530.Maximal%20Score%20After%20Applying%20K%20Operations/README_EN.md)
+- [2531. Make Number of Distinct Characters Equal](/solution/2500-2599/2531.Make%20Number%20of%20Distinct%20Characters%20Equal/README_EN.md)
+- [2532. Time to Cross a Bridge](/solution/2500-2599/2532.Time%20to%20Cross%20a%20Bridge/README_EN.md)
+
+
+#### Biweekly Contest 95
+
+- [2525. Categorize Box According to Criteria](/solution/2500-2599/2525.Categorize%20Box%20According%20to%20Criteria/README_EN.md)
+- [2526. Find Consecutive Integers from a Data Stream](/solution/2500-2599/2526.Find%20Consecutive%20Integers%20from%20a%20Data%20Stream/README_EN.md)
+- [2527. Find Xor-Beauty of Array](/solution/2500-2599/2527.Find%20Xor-Beauty%20of%20Array/README_EN.md)
+- [2528. Maximize the Minimum Powered City](/solution/2500-2599/2528.Maximize%20the%20Minimum%20Powered%20City/README_EN.md)
+
 
 #### Weekly Contest 326
 

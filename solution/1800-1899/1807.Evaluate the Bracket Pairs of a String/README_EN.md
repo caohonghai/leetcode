@@ -101,8 +101,7 @@ class Solution {
             d.put(e.get(0), e.get(1));
         }
         StringBuilder ans = new StringBuilder();
-        int i = 0, n = s.length();
-        while (i < n) {
+        for (int i = 0; i < s.length(); ++i) {
             if (s.charAt(i) == '(') {
                 int j = s.indexOf(')', i + 1);
                 ans.append(d.getOrDefault(s.substring(i + 1, j), "?"));
@@ -110,7 +109,6 @@ class Solution {
             } else {
                 ans.append(s.charAt(i));
             }
-            ++i;
         }
         return ans.toString();
     }
@@ -128,8 +126,7 @@ public:
             d[e[0]] = e[1];
         }
         string ans;
-        int i = 0, n = s.size();
-        while (i < n) {
+        for (int i = 0; i < s.size(); ++i) {
             if (s[i] == '(') {
                 int j = s.find(")", i + 1);
                 auto t = s.substr(i + 1, j - i - 1);
@@ -138,7 +135,6 @@ public:
             } else {
                 ans += s[i];
             }
-            ++i;
         }
         return ans;
     }
@@ -154,8 +150,7 @@ func evaluate(s string, knowledge [][]string) string {
 		d[v[0]] = v[1]
 	}
 	var ans strings.Builder
-	i, n := 0, len(s)
-	for ; i < n; i++ {
+	for i := 0; i < len(s); i++ {
 		if s[i] == '(' {
 			j := i + 1
 			for s[j] != ')' {
@@ -172,6 +167,66 @@ func evaluate(s string, knowledge [][]string) string {
 		}
 	}
 	return ans.String()
+}
+```
+
+### **TypeScript**
+
+```ts
+function evaluate(s: string, knowledge: string[][]): string {
+    const n = s.length;
+    const map = new Map();
+    for (const [k, v] of knowledge) {
+        map.set(k, v);
+    }
+    const ans = [];
+    let i = 0;
+    while (i < n) {
+        if (s[i] === '(') {
+            const j = s.indexOf(')', i + 1);
+            ans.push(map.get(s.slice(i + 1, j)) ?? '?');
+            i = j;
+        } else {
+            ans.push(s[i]);
+        }
+        i++;
+    }
+    return ans.join('');
+}
+```
+
+### **Rust**
+
+```rust
+use std::collections::HashMap;
+impl Solution {
+    pub fn evaluate(s: String, knowledge: Vec<Vec<String>>) -> String {
+        let s = s.as_bytes();
+        let n = s.len();
+        let mut map = HashMap::new();
+        for v in knowledge.iter() {
+            map.insert(&v[0], &v[1]);
+        }
+        let mut ans = String::new();
+        let mut i = 0;
+        while i < n {
+            if s[i] == b'(' {
+                i += 1;
+                let mut j = i;
+                let mut key = String::new();
+                while s[j] != b')' {
+                    key.push(s[j] as char);
+                    j += 1;
+                }
+                ans.push_str(map.get(&key).unwrap_or(&&'?'.to_string()));
+                i = j;
+            } else {
+                ans.push(s[i] as char);
+            }
+            i += 1;
+        }
+        ans
+    }
 }
 ```
 

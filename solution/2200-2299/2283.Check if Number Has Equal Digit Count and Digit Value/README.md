@@ -14,7 +14,8 @@
 
 <p><strong>示例 1：</strong></p>
 
-<pre><b>输入：</b>num = "1210"
+<pre>
+<b>输入：</b>num = "1210"
 <b>输出：</b>true
 <strong>解释：</strong>
 num[0] = '1' 。数字 0 在 num 中出现了一次。
@@ -26,10 +27,11 @@ num[3] = '0' 。数字 3 在 num 中出现了零次。
 
 <p><strong>示例 2：</strong></p>
 
-<pre><b>输入：</b>num = "030"
+<pre>
+<b>输入：</b>num = "030"
 <b>输出：</b>false
 <strong>解释：</strong>
-num[0] = '0' 。数字 0 应该出现 0 次，但是在 num 中出现了一次。
+num[0] = '0' 。数字 0 应该出现 0 次，但是在 num 中出现了两次。
 num[1] = '3' 。数字 1 应该出现 3 次，但是在 num 中出现了零次。
 num[2] = '0' 。数字 2 在 num 中出现了 0 次。
 下标 0 和 1 都违反了题目要求，所以返回 false 。
@@ -49,6 +51,12 @@ num[2] = '0' 。数字 2 在 num 中出现了 0 次。
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：计数 + 枚举**
+
+统计字符串中每个数字出现的次数，然后枚举每个数字，判断其出现的次数是否与其值相等，若都相等则返回 `true`，否则返回 `false`。
+
+时间复杂度 $O(n)$，空间复杂度 $O(C)$。其中 $n$ 是字符串 `num` 的长度，而 $C$ 是数字的个数。本题中 $C=10$。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -59,7 +67,7 @@ num[2] = '0' 。数字 2 在 num 中出现了 0 次。
 class Solution:
     def digitCount(self, num: str) -> bool:
         cnt = Counter(num)
-        return all(int(v) == cnt[str(i)] for i, v in enumerate(num))
+        return all(cnt[str(i)] == int(v) for i, v in enumerate(num))
 ```
 
 ### **Java**
@@ -70,12 +78,12 @@ class Solution:
 class Solution {
     public boolean digitCount(String num) {
         int[] cnt = new int[10];
-        for (char c : num.toCharArray()) {
-            ++cnt[c - '0'];
+        int n = num.length();
+        for (int i = 0; i < n; ++i) {
+            ++cnt[num.charAt(i) - '0'];
         }
-        for (int i = 0; i < num.length(); ++i) {
-            int v = num.charAt(i) - '0';
-            if (cnt[i] != v) {
+        for (int i = 0; i < n; ++i) {
+            if (cnt[i] != num.charAt(i) - '0') {
                 return false;
             }
         }
@@ -90,11 +98,14 @@ class Solution {
 class Solution {
 public:
     bool digitCount(string num) {
-        vector<int> cnt(10);
-        for (char& c : num) ++cnt[c - '0'];
+        int cnt[10]{};
+        for (char& c : num) {
+            ++cnt[c - '0'];
+        }
         for (int i = 0; i < num.size(); ++i) {
-            int v = num[i] - '0';
-            if (cnt[i] != v) return false;
+            if (cnt[i] != num[i] - '0') {
+                return false;
+            }
         }
         return true;
     }
@@ -105,13 +116,12 @@ public:
 
 ```go
 func digitCount(num string) bool {
-	cnt := make([]int, 10)
+	cnt := [10]int{}
 	for _, c := range num {
 		cnt[c-'0']++
 	}
-	for i, c := range num {
-		v := int(c - '0')
-		if cnt[i] != v {
+	for i, v := range num {
+		if cnt[i] != int(v-'0') {
 			return false
 		}
 	}
@@ -122,7 +132,56 @@ func digitCount(num string) bool {
 ### **TypeScript**
 
 ```ts
+function digitCount(num: string): boolean {
+    const n = num.length;
+    const count = new Array(10).fill(0);
+    for (let i = 0; i < n; i++) {
+        count[i] = Number(num[i]);
+    }
+    for (const c of num) {
+        count[c]--;
+    }
+    return count.every(v => v === 0);
+}
+```
 
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn digit_count(num: String) -> bool {
+        let s = num.as_bytes();
+        let n = num.len();
+        let mut count = [0; 10];
+        for i in 0..n {
+            count[i] = s[i] - b'0';
+        }
+        for c in s {
+            count[(c - b'0') as usize] -= 1;
+        }
+        count.iter().all(|v| *v == 0)
+    }
+}
+```
+
+### **C**
+
+```c
+bool digitCount(char *num) {
+    int count[10] = {0};
+    for (int i = 0; num[i]; i++) {
+        count[i] = num[i] - '0';
+    }
+    for (int i = 0; num[i]; i++) {
+        count[num[i] - '0']--;
+    }
+    for (int i = 0; i < 10; i++) {
+        if (count[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
 ```
 
 ### **...**

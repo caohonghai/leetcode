@@ -56,6 +56,14 @@ nums[0] 和 nums[1] 形成一个数对，并从 nums 中移除，nums = [2] 。
 
 <!-- 这里可写通用的实现逻辑 -->
 
+**方法一：计数**
+
+我们可以统计数组 `nums` 中每个数字出现的次数，记录在数组 `cnt` 中。然后遍历数组 `cnt`，对于每个数字 $v$，如果 $v$ 出现的次数大于等于 $2$，则可以从数组中选出两个 $v$ 形成一个数对，此时我们将 $v$ 出现的次数除以 $2$，即可得到可以形成的数对数目，然后将这个数对数目加到答案中。
+
+最终剩余的数字个数为数组 `nums` 的长度减去可以形成的数对数目乘以 $2$。
+
+时间复杂度 $O(n)$，空间复杂度 $O(C)$。其中 $n$ 为数组 `nums` 的长度，而 $C$ 为数组 `nums` 中数字的范围。本题中 $C = 101$。
+
 <!-- tabs:start -->
 
 ### **Python3**
@@ -97,13 +105,14 @@ class Solution {
 public:
     vector<int> numberOfPairs(vector<int>& nums) {
         vector<int> cnt(101);
-        for (int v : nums) ++cnt[v];
+        for (int& v : nums) {
+            ++cnt[v];
+        }
         int s = 0;
-        for (int v : cnt) s += v / 2;
-        vector<int> ans(2);
-        ans[0] = s;
-        ans[1] = nums.size() - s * 2;
-        return ans;
+        for (int& v : cnt) {
+            s += v >> 1;
+        }
+        return {s, (int) nums.size() - s * 2};
     }
 };
 ```
@@ -127,7 +136,74 @@ func numberOfPairs(nums []int) []int {
 ### **TypeScript**
 
 ```ts
+function numberOfPairs(nums: number[]): number[] {
+    const n = nums.length;
+    const count = new Array(101).fill(0);
+    for (const num of nums) {
+        count[num]++;
+    }
+    const sum = count.reduce((r, v) => r + (v >> 1), 0);
+    return [sum, n - sum * 2];
+}
+```
 
+### **Rust**
+
+```rust
+impl Solution {
+    pub fn number_of_pairs(nums: Vec<i32>) -> Vec<i32> {
+        let n = nums.len();
+        let mut count = [0; 101];
+        for &v in nums.iter() {
+            count[v as usize] += 1;
+        }
+        let mut sum = 0;
+        for v in count.iter() {
+            sum += v >> 1;
+        }
+        vec![sum as i32, (n - sum * 2) as i32]
+    }
+}
+```
+
+### **C**
+
+```c
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int *numberOfPairs(int *nums, int numsSize, int *returnSize) {
+    int count[101] = {0};
+    for (int i = 0; i < numsSize; i++) {
+        count[nums[i]]++;
+    }
+    int sum = 0;
+    for (int i = 0; i < 101; i++) {
+        sum += count[i] >> 1;
+    }
+    int *ans = malloc(sizeof(int) * 2);
+    ans[0] = sum;
+    ans[1] = numsSize - sum * 2;
+    *returnSize = 2;
+    return ans;
+}
+```
+
+### **JavaScript**
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var numberOfPairs = function (nums) {
+    const cnt = new Array(101).fill(0);
+    for (const v of nums) {
+        ++cnt[v];
+    }
+    const s = cnt.reduce((a, b) => a + (b >> 1), 0);
+    return [s, nums.length - s * 2];
+};
 ```
 
 ### **...**
