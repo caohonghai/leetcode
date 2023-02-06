@@ -17,7 +17,7 @@
 
 <p>「一号」玩家给值为&nbsp;<code>x</code>&nbsp;的节点染上红色，而「二号」玩家给值为&nbsp;<code>y</code>&nbsp;的节点染上蓝色。</p>
 
-<p>之后两位玩家轮流进行操作，「一号」玩家先手。每一回合，玩家选择一个之前涂好颜色的节点，将所选节点一个 <strong>未着色 </strong>的邻节点（即左右子节点、或父节点）进行染色（「一号」玩家染红色，「二号」玩家染蓝色）。</p>
+<p>之后两位玩家轮流进行操作，「一号」玩家先手。每一回合，玩家选择一个被他染过色的节点，将所选节点一个 <strong>未着色 </strong>的邻节点（即左右子节点、或父节点）进行染色（「一号」玩家染红色，「二号」玩家染蓝色）。</p>
 
 <p>如果（且仅在此种情况下）当前玩家无法找到这样的节点来染色时，其回合就会被跳过。</p>
 
@@ -58,9 +58,9 @@
 
 **方法一：DFS**
 
-先通过 $DFS$，找到 $x$ 所在的节点，我们记为 $node$。然后统计 $node$ 的左子树、右子树、父节点方向上的节点个数。如果这三个方向上有任何一个节点个数超过了节点总数的一半，则存在一个必胜策略。
+我们先通过 $DFS$，找到「一号」玩家着色点 $x$ 所在的节点，记为 $node$。
 
-这里 $node$ 父节点方向上的节点个数，可以由节点总数 $n$ 减去 $node$ 及其 $node$ 的左右子树节点数之和得到。
+接下来，我们统计 $node$ 的左子树、右子树的节点个数，分别记为 $l$ 和 $r$，而 $node$ 父节点方向上的个数为 $n - l - r - 1$。只要满足 $\max(l, r, n - l - r - 1) > \frac{n}{2}$，则「二号」玩家存在一个必胜策略。
 
 时间复杂度 $O(n)$，空间复杂度 $O(n)$。其中 $n$ 是节点总数。
 
@@ -91,9 +91,7 @@ class Solution:
 
         node = dfs(root)
         l, r = count(node.left), count(node.right)
-        t = n - l - r - 1
-        m = max(l, r, t)
-        return m > n - m
+        return max(l, r, n - l - r - 1) > n // 2
 ```
 
 ### **Java**
@@ -121,26 +119,22 @@ class Solution {
         TreeNode node = dfs(root, x);
         int l = count(node.left);
         int r = count(node.right);
-        int m = Math.max(Math.max(l, r), n - l - r - 1);
-        return m > n - m;
-    }
-
-    private int count(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-        return 1 + count(node.left) + count(node.right);
+        return Math.max(Math.max(l, r), n - l - r - 1) > n / 2;
     }
 
     private TreeNode dfs(TreeNode root, int x) {
         if (root == null || root.val == x) {
             return root;
         }
-        TreeNode l = dfs(root.left, x);
-        if (l != null) {
-            return l;
+        TreeNode node = dfs(root.left, x);
+        return node == null ? dfs(root.right, x) : node;
+    }
+
+    private int count(TreeNode root) {
+        if (root == null) {
+            return 0;
         }
-        return dfs(root.right, x);
+        return 1 + count(root.left) + count(root.right);
     }
 }
 ```
@@ -162,22 +156,24 @@ class Solution {
 class Solution {
 public:
     bool btreeGameWinningMove(TreeNode* root, int n, int x) {
-        TreeNode* node = dfs(root, x);
-        int l = count(node->left);
-        int r = count(node->right);
-        int m = max(max(l, r), n - l - r - 1);
-        return m > n - m;
-    }
-
-    int count(TreeNode* root) {
-        if (!root) return 0;
-        return 1 + count(root->left) + count(root->right);
+        auto node = dfs(root, x);
+        int l = count(node->left), r = count(node->right);
+        return max({l, r, n - l - r - 1}) > n / 2;
     }
 
     TreeNode* dfs(TreeNode* root, int x) {
-        if (!root || root->val == x) return root;
-        auto l = dfs(root->left, x);
-        return l ? l : dfs(root->right, x);
+        if (!root || root->val == x) {
+            return root;
+        }
+        auto node = dfs(root->left, x);
+        return node ? node : dfs(root->right, x);
+    }
+
+    int count(TreeNode* root) {
+        if (!root) {
+            return 0;
+        }
+        return 1 + count(root->left) + count(root->right);
     }
 };
 ```
@@ -199,12 +195,13 @@ func btreeGameWinningMove(root *TreeNode, n int, x int) bool {
 		if root == nil || root.Val == x {
 			return root
 		}
-		l := dfs(root.Left)
-		if l != nil {
-			return l
+		node := dfs(root.Left)
+		if node != nil {
+			return node
 		}
 		return dfs(root.Right)
 	}
+
 	var count func(*TreeNode) int
 	count = func(root *TreeNode) int {
 		if root == nil {
@@ -212,10 +209,10 @@ func btreeGameWinningMove(root *TreeNode, n int, x int) bool {
 		}
 		return 1 + count(root.Left) + count(root.Right)
 	}
+
 	node := dfs(root)
 	l, r := count(node.Left), count(node.Right)
-	m := max(max(l, r), n-l-r-1)
-	return m > n-m
+	return max(max(l, r), n-l-r-1) > n/2
 }
 
 func max(a, b int) int {
@@ -223,6 +220,88 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+```
+
+### **JavaScript**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} n
+ * @param {number} x
+ * @return {boolean}
+ */
+var btreeGameWinningMove = function (root, n, x) {
+    const dfs = root => {
+        if (!root || root.val === x) {
+            return root;
+        }
+        return dfs(root.left) || dfs(root.right);
+    };
+
+    const count = root => {
+        if (!root) {
+            return 0;
+        }
+        return 1 + count(root.left) + count(root.right);
+    };
+
+    const node = dfs(root);
+    const l = count(node.left);
+    const r = count(node.right);
+    return Math.max(l, r, n - l - r - 1) > n / 2;
+};
+```
+
+### **TypeScript**
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function btreeGameWinningMove(
+    root: TreeNode | null,
+    n: number,
+    x: number,
+): boolean {
+    const dfs = (root: TreeNode | null): TreeNode | null => {
+        if (!root || root.val === x) {
+            return root;
+        }
+        return dfs(root.left) || dfs(root.right);
+    };
+
+    const count = (root: TreeNode | null): number => {
+        if (!root) {
+            return 0;
+        }
+        return 1 + count(root.left) + count(root.right);
+    };
+
+    const node = dfs(root);
+    const l = count(node.left);
+    const r = count(node.right);
+    return Math.max(l, r, n - l - r - 1) > n / 2;
 }
 ```
 
